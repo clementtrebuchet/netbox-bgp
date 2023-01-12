@@ -67,6 +67,16 @@
                         </td>
                     </tr>
                     <tr>
+                        <td>VRF</td>
+                        <td>
+                            {% if object.vrf %}
+                            <a href="{{ object.vrf.get_absolute_url }}">{{ object.vrf }}</a>
+                            {% else %}
+                            <span class="text-muted">None</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    <tr>
                         <td>Local AS</td>
                         <td>
                             {% if object.local_as %}
@@ -135,6 +145,26 @@
                             <span class="text-muted">None</span>
                             {% endif %}
                         </td>
+                    </tr>
+                    <tr>
+                        <td>Password</td>
+                        <td><input type='password' id='password' value="{{ object.password }}" disabled>
+                        <i class="mdi mdi-eye text-success" id="togglePassword" onclick="showPassword()" style="cursor: pointer; margin-left: -30px; z-index: 100;"></i></td>
+                        <script>
+                            function showPassword() {
+                                var input_type = document.getElementById("password");
+                                var toggle_class = document.getElementById("togglePassword")
+                                if (input_type.type === "password") {
+                                    input_type.type = "text";
+                                    toggle_class.classList.remove("mdi", "mdi-eye")
+                                    toggle_class.classList.add("mdi", "mdi-eye-off")
+                                } else {
+                                    input_type.type = "password";
+                                    toggle_class.classList.remove("mdi", "mdi-eye-off")
+                                    toggle_class.classList.add("mdi", "mdi-eye")
+                                }
+                            }
+                        </script>
                     </tr>
                 </table>
             </div>
