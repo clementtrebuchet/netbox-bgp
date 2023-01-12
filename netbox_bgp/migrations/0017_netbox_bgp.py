@@ -4,28 +4,35 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        #('dcim', '0131_consoleport_speed'),
-        #('ipam', '0046_set_vlangroup_scope_types'),
-        ('netbox_bgp', '0016_netbox_bgp'),
+        # ('dcim', '0131_consoleport_speed'),
+        # ('ipam', '0046_set_vlangroup_scope_types'),
+        ("netbox_bgp", "0016_netbox_bgp"),
     ]
 
     operations = [
         migrations.AlterUniqueTogether(
-            name='bgpsession',
-            unique_together={('device', 'local_address', 'local_as', 'remote_address', 'remote_as')},
+            name="bgpsession",
+            unique_together={
+                ("device", "local_address", "local_as", "remote_address", "remote_as")
+            },
         ),
         migrations.AlterUniqueTogether(
-            name='routingpolicy',
-            unique_together={('name', 'description')},
+            name="routingpolicy",
+            unique_together={("name", "description")},
         ),
         migrations.AddConstraint(
-            model_name='asn',
-            constraint=models.UniqueConstraint(fields=('number', 'tenant'), name='uniqie_number_tenant'),
+            model_name="asn",
+            constraint=models.UniqueConstraint(
+                fields=("number", "tenant"), name="uniqie_number_tenant"
+            ),
         ),
         migrations.AddConstraint(
-            model_name='asn',
-            constraint=models.UniqueConstraint(condition=models.Q(tenant=None), fields=('number',), name='uniqie_number'),
+            model_name="asn",
+            constraint=models.UniqueConstraint(
+                condition=models.Q(tenant=None),
+                fields=("number",),
+                name="uniqie_number",
+            ),
         ),
     ]

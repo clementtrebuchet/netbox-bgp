@@ -4,33 +4,36 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('netbox_bgp', '0023_netbox_bgp'),
+        ("netbox_bgp", "0023_netbox_bgp"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='routingpolicyrule',
-            name='match_ip',
+            model_name="routingpolicyrule",
+            name="match_ip",
         ),
         migrations.RemoveField(
-            model_name='routingpolicyrule',
-            name='match_ip_cond',
+            model_name="routingpolicyrule",
+            name="match_ip_cond",
         ),
         migrations.AddField(
-            model_name='routingpolicyrule',
-            name='continue_entry',
+            model_name="routingpolicyrule",
+            name="continue_entry",
             field=models.PositiveIntegerField(blank=True, null=True),
         ),
         migrations.AddField(
-            model_name='routingpolicyrule',
-            name='match_ip_address',
-            field=models.ManyToManyField(blank=True, related_name='+', to='netbox_bgp.prefixlist'),
+            model_name="routingpolicyrule",
+            name="match_ip_address",
+            field=models.ManyToManyField(
+                blank=True, related_name="+", to="netbox_bgp.prefixlist"
+            ),
         ),
         migrations.AddField(
-            model_name='routingpolicyrule',
-            name='match_ipv6_address',
-            field=models.ManyToManyField(blank=True, related_name='+', to='netbox_bgp.prefixlist'),
+            model_name="routingpolicyrule",
+            name="match_ipv6_address",
+            field=models.ManyToManyField(
+                blank=True, related_name="+", to="netbox_bgp.prefixlist"
+            ),
         ),
     ]

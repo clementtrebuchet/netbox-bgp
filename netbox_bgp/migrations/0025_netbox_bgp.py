@@ -4,20 +4,23 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('netbox_bgp', '0024_netbox_bgp'),
+        ("netbox_bgp", "0024_netbox_bgp"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='routingpolicyrule',
-            name='match_ip_address',
-            field=models.ManyToManyField(blank=True, related_name='plrules', to='netbox_bgp.prefixlist'),
+            model_name="routingpolicyrule",
+            name="match_ip_address",
+            field=models.ManyToManyField(
+                blank=True, related_name="plrules", to="netbox_bgp.prefixlist"
+            ),
         ),
         migrations.AlterField(
-            model_name='routingpolicyrule',
-            name='match_ipv6_address',
-            field=models.ManyToManyField(blank=True, related_name='plrules6', to='netbox_bgp.prefixlist'),
+            model_name="routingpolicyrule",
+            name="match_ipv6_address",
+            field=models.ManyToManyField(
+                blank=True, related_name="plrules6", to="netbox_bgp.prefixlist"
+            ),
         ),
     ]

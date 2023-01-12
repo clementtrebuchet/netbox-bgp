@@ -4,19 +4,18 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('netbox_bgp', '0011_netbox_bgp'),
+        ("netbox_bgp", "0011_netbox_bgp"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='routingpolicy',
-            options={'verbose_name_plural': 'Routing Policies'},
+            name="routingpolicy",
+            options={"verbose_name_plural": "Routing Policies"},
         ),
         migrations.AlterField(
-            model_name='bgppeergroup',
-            name='slug',
+            model_name="bgppeergroup",
+            name="slug",
             field=models.SlugField(blank=True, max_length=100),
         ),
     ]

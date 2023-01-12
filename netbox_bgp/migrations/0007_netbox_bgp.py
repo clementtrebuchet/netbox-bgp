@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('netbox_bgp', '0006_netbox_bgp'),
+        ("netbox_bgp", "0006_netbox_bgp"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='bgpsession',
-            name='name',
+            model_name="bgpsession",
+            name="name",
             field=models.CharField(blank=True, max_length=64, null=True),
         ),
     ]

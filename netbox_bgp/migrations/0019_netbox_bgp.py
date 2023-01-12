@@ -5,15 +5,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('netbox_bgp', '0018_netbox_bgp'),
+        ("netbox_bgp", "0018_netbox_bgp"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='asn',
-            name='number',
-            field=models.PositiveBigIntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(4294967295)]),
+            model_name="asn",
+            name="number",
+            field=models.PositiveBigIntegerField(
+                validators=[
+                    django.core.validators.MinValueValidator(1),
+                    django.core.validators.MaxValueValidator(4294967295),
+                ]
+            ),
         ),
     ]

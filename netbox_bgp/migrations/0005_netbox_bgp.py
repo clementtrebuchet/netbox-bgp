@@ -4,14 +4,13 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('netbox_bgp', '0004_netbox_bgp'),
+        ("netbox_bgp", "0004_netbox_bgp"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='asn',
-            options={'verbose_name_plural': 'AS Numbers'},
+            name="asn",
+            options={"verbose_name_plural": "AS Numbers"},
         ),
     ]

@@ -5,24 +5,37 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('netbox_bgp', '0001_initial'),
+        ("netbox_bgp", "0001_initial"),
     ]
 
     operations = [
         migrations.AlterModelOptions(
-            name='community',
-            options={'verbose_name_plural': 'Communities'},
+            name="community",
+            options={"verbose_name_plural": "Communities"},
         ),
         migrations.AlterField(
-            model_name='asn',
-            name='number',
-            field=models.PositiveIntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(4294967294)]),
+            model_name="asn",
+            name="number",
+            field=models.PositiveIntegerField(
+                blank=True,
+                null=True,
+                validators=[
+                    django.core.validators.MinValueValidator(1),
+                    django.core.validators.MaxValueValidator(4294967294),
+                ],
+            ),
         ),
         migrations.AlterField(
-            model_name='community',
-            name='number',
-            field=models.PositiveIntegerField(blank=True, null=True, validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(4294967294)]),
+            model_name="community",
+            name="number",
+            field=models.PositiveIntegerField(
+                blank=True,
+                null=True,
+                validators=[
+                    django.core.validators.MinValueValidator(1),
+                    django.core.validators.MaxValueValidator(4294967294),
+                ],
+            ),
         ),
     ]

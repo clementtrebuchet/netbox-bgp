@@ -5,25 +5,36 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('netbox_bgp', '0014_netbox_bgp'),
+        ("netbox_bgp", "0014_netbox_bgp"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='asn',
-            name='custom_field_data',
-            field=models.JSONField(blank=True, default=dict, encoder=django.core.serializers.json.DjangoJSONEncoder),
+            model_name="asn",
+            name="custom_field_data",
+            field=models.JSONField(
+                blank=True,
+                default=dict,
+                encoder=django.core.serializers.json.DjangoJSONEncoder,
+            ),
         ),
         migrations.AddField(
-            model_name='bgpsession',
-            name='custom_field_data',
-            field=models.JSONField(blank=True, default=dict, encoder=django.core.serializers.json.DjangoJSONEncoder),
+            model_name="bgpsession",
+            name="custom_field_data",
+            field=models.JSONField(
+                blank=True,
+                default=dict,
+                encoder=django.core.serializers.json.DjangoJSONEncoder,
+            ),
         ),
         migrations.AddField(
-            model_name='routingpolicy',
-            name='custom_field_data',
-            field=models.JSONField(blank=True, default=dict, encoder=django.core.serializers.json.DjangoJSONEncoder),
+            model_name="routingpolicy",
+            name="custom_field_data",
+            field=models.JSONField(
+                blank=True,
+                default=dict,
+                encoder=django.core.serializers.json.DjangoJSONEncoder,
+            ),
         ),
     ]

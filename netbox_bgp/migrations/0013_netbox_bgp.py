@@ -4,18 +4,17 @@ from django.db import migrations
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('netbox_bgp', '0012_netbox_bgp'),
+        ("netbox_bgp", "0012_netbox_bgp"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='bgppeergroup',
-            name='slug',
+            model_name="bgppeergroup",
+            name="slug",
         ),
         migrations.RemoveField(
-            model_name='routingpolicy',
-            name='slug',
+            model_name="routingpolicy",
+            name="slug",
         ),
     ]
