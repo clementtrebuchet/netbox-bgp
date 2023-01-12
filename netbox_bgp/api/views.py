@@ -1,13 +1,27 @@
 from rest_framework.viewsets import ModelViewSet
 
-from .serializers import (
-    BGPSessionSerializer, RoutingPolicySerializer, BGPPeerGroupSerializer,
-    CommunitySerializer, PrefixListSerializer
-)
-from netbox_bgp.models import BGPSession, RoutingPolicy, BGPPeerGroup, Community, PrefixList
 from netbox_bgp.filters import (
-    BGPSessionFilterSet, RoutingPolicyFilterSet, BGPPeerGroupFilterSet,
-    CommunityFilterSet, PrefixListFilterSet
+    BGPSessionFilterSet,
+    RoutingPolicyFilterSet,
+    BGPPeerGroupFilterSet,
+    CommunityFilterSet,
+    PrefixListFilterSet,
+)
+from netbox_bgp.models import (
+    BGPSession,
+    RoutingPolicy,
+    BGPPeerGroup,
+    Community,
+    PrefixList,
+    Password,
+)
+from .serializers import (
+    BGPSessionSerializer,
+    RoutingPolicySerializer,
+    BGPPeerGroupSerializer,
+    CommunitySerializer,
+    PrefixListSerializer,
+    PasswordSerializer,
 )
 
 
@@ -39,3 +53,8 @@ class PrefixListViewSet(ModelViewSet):
     queryset = PrefixList.objects.all()
     serializer_class = PrefixListSerializer
     filterset_class = PrefixListFilterSet
+
+
+class PasswordViewSet(ModelViewSet):
+    queryset = Password.objects.all()
+    serializer_class = PasswordSerializer

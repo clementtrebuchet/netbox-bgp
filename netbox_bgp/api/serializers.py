@@ -1,5 +1,5 @@
-from rest_framework.serializers import HyperlinkedIdentityField, ValidationError
 from rest_framework.relations import PrimaryKeyRelatedField
+from rest_framework.serializers import HyperlinkedIdentityField, ValidationError
 
 # for netbox 3.3
 try:
@@ -13,10 +13,15 @@ from dcim.api.nested_serializers import NestedSiteSerializer, NestedDeviceSerial
 from tenancy.api.nested_serializers import NestedTenantSerializer
 from ipam.api.nested_serializers import NestedIPAddressSerializer, NestedASNSerializer
 
-
 from netbox_bgp.models import (
-    BGPSession, RoutingPolicy, BGPPeerGroup,
-    Community, RoutingPolicyRule, PrefixList, PrefixListRule,
+    BGPSession,
+    RoutingPolicy,
+    BGPPeerGroup,
+    Community,
+    RoutingPolicyRule,
+    PrefixList,
+    PrefixListRule,
+    Password,
 )
 
 from netbox_bgp.choices import CommunityStatusChoices, SessionStatusChoices
@@ -25,25 +30,25 @@ from netbox_bgp.choices import CommunityStatusChoices, SessionStatusChoices
 class SerializedPKRelatedField(PrimaryKeyRelatedField):
     def __init__(self, serializer, **kwargs):
         self.serializer = serializer
-        self.pk_field = kwargs.pop('pk_field', None)
+        self.pk_field = kwargs.pop("pk_field", None)
         super().__init__(**kwargs)
 
     def to_representation(self, value):
-        return self.serializer(value, context={'request': self.context['request']}).data
+        return self.serializer(value, context={"request": self.context["request"]}).data
 
 
 class RoutingPolicySerializer(NetBoxModelSerializer):
     class Meta:
         model = RoutingPolicy
-        fields = '__all__'
+        fields = "__all__"
 
 
 class NestedRoutingPolicySerializer(WritableNestedSerializer):
-    url = HyperlinkedIdentityField(view_name='plugins:netbox_bgp:routingpolicy')
+    url = HyperlinkedIdentityField(view_name="plugins:netbox_bgp:routingpolicy")
 
     class Meta:
         model = RoutingPolicy
-        fields = ['id', 'url', 'name', 'description']
+        fields = ["id", "url", "name", "description"]
 
 
 class BGPPeerGroupSerializer(NetBoxModelSerializer):
@@ -52,27 +57,27 @@ class BGPPeerGroupSerializer(NetBoxModelSerializer):
         serializer=NestedRoutingPolicySerializer,
         required=False,
         allow_null=True,
-        many=True
+        many=True,
     )
     export_policies = SerializedPKRelatedField(
         queryset=RoutingPolicy.objects.all(),
         serializer=NestedRoutingPolicySerializer,
         required=False,
         allow_null=True,
-        many=True
+        many=True,
     )
 
     class Meta:
         model = BGPPeerGroup
-        fields = '__all__'
+        fields = "__all__"
 
 
 class NestedBGPPeerGroupSerializer(WritableNestedSerializer):
-    url = HyperlinkedIdentityField(view_name='plugins:netbox_bgp:bgppeergroup')
+    url = HyperlinkedIdentityField(view_name="plugins:netbox_bgp:bgppeergroup")
 
     class Meta:
         model = BGPPeerGroup
-        fields = ['id', 'url', 'name', 'description']
+        fields = ["id", "url", "name", "description"]
         validators = []
 
 
@@ -91,32 +96,34 @@ class BGPSessionSerializer(NetBoxModelSerializer):
         serializer=NestedRoutingPolicySerializer,
         required=False,
         allow_null=True,
-        many=True
+        many=True,
     )
     export_policies = SerializedPKRelatedField(
         queryset=RoutingPolicy.objects.all(),
         serializer=NestedRoutingPolicySerializer,
         required=False,
         allow_null=True,
-        many=True
+        many=True,
     )
 
     class Meta:
         model = BGPSession
-        fields = '__all__'
+        fields = "__all__"
         validators = []
 
     def validate(self, attrs):
         qs = BGPSession.objects.filter(
-            device=attrs.get('device'),
-            local_as=attrs.get('local_as'),
-            local_address=attrs.get('local_address'),
-            remote_as=attrs.get('remote_as'),
-            remote_address=attrs.get('remote_address'),
+            device=attrs.get("device"),
+            local_as=attrs.get("local_as"),
+            local_address=attrs.get("local_address"),
+            remote_as=attrs.get("remote_as"),
+            remote_address=attrs.get("remote_address"),
         )
         if qs.exists():
             raise ValidationError(
-                {'error': 'BGP Session with this Device, Local address, Local AS, Remote address and Remote AS already exists.'}
+                {
+                    "error": "BGP Session with this Device, Local address, Local AS, Remote address and Remote AS already exists."
+                }
             )
         return attrs
 
@@ -125,23 +132,31 @@ class BGPSessionSerializer(NetBoxModelSerializer):
 
         if instance is not None:
             if instance.peer_group:
-                for pol in instance.peer_group.import_policies.difference(instance.import_policies.all()):
-                    ret['import_policies'].append(
-                        NestedRoutingPolicySerializer(pol, context={'request': self.context['request']}).data
+                for pol in instance.peer_group.import_policies.difference(
+                    instance.import_policies.all()
+                ):
+                    ret["import_policies"].append(
+                        NestedRoutingPolicySerializer(
+                            pol, context={"request": self.context["request"]}
+                        ).data
                     )
-                for pol in instance.peer_group.export_policies.difference(instance.export_policies.all()):
-                    ret['export_policies'].append(
-                        NestedRoutingPolicySerializer(pol, context={'request': self.context['request']}).data
+                for pol in instance.peer_group.export_policies.difference(
+                    instance.export_policies.all()
+                ):
+                    ret["export_policies"].append(
+                        NestedRoutingPolicySerializer(
+                            pol, context={"request": self.context["request"]}
+                        ).data
                     )
         return ret
 
 
 class NestedBGPSessionSerializer(WritableNestedSerializer):
-    url = HyperlinkedIdentityField(view_name='plugins:netbox_bgp:bgpsession')
+    url = HyperlinkedIdentityField(view_name="plugins:netbox_bgp:bgpsession")
 
     class Meta:
         model = BGPSession
-        fields = ['id', 'url', 'name', 'description']
+        fields = ["id", "url", "name", "description"]
         validators = []
 
 
@@ -152,22 +167,28 @@ class CommunitySerializer(NetBoxModelSerializer):
     class Meta:
         model = Community
         # fields = ['id', 'value', 'status', 'description', 'tenant', 'tags']
-        fields = '__all__'
+        fields = "__all__"
 
 
 class RoutingPolicyRuleSerializer(NetBoxModelSerializer):
     class Meta:
         model = RoutingPolicyRule
-        fields = '__all__'
+        fields = "__all__"
 
 
 class PrefixListSerializer(NetBoxModelSerializer):
     class Meta:
         model = PrefixList
-        fields = '__all__'
+        fields = "__all__"
 
 
 class PrefixListRuleSerializer(NetBoxModelSerializer):
     class Meta:
         model = PrefixListRule
-        fields = '__all__'
+        fields = "__all__"
+
+
+class PasswordSerializer(NetBoxModelSerializer):
+    class Meta:
+        model = Password
+        fields = "__all__"
